@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="TonFaceJS">
     <head>
         <title>TonFaceJS</title>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
+        <!-- Frameworks -->
         <script type="text/javascript" src="js/sdk/sdk-fb.js"></script>
         <script type="text/javascript" src="js/sdk/jq.min.js"></script>
         <script type="text/javascript" src="js/sdk/angular.min.js"></script>
+        <script type="text/javascript" src="js/tonface.js"></script>
+        <!-- /Frameworks -->
     </head>
-    <body>
+    <body ng-controller="AcoesFBCtrl" ng-init="SetUpFB()">
+    	<div id="fb-root"></div>
+
+    	<div id="acoes_fb">
+			<button ng-click="AssinarApp()">Logar FB</button>
+    	</div>
+    	
         
+        <footer id="includes_js">
+        	<!-- Meus JS -->
+        	<script type="text/javascript" src="js/app/base_app_angular.js"></script>
+        	<script type="text/javascript" src="js/app/exemp_app.js"></script>
+        	<!-- /Meus JS -->
+        </footer>
     </body>
 </html>
