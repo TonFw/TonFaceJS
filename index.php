@@ -4,20 +4,24 @@
         <title>TonFaceJS</title>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <!-- Frameworks -->
-        <script type="text/javascript" src="js/sdk/sdk-fb.js"></script>
         <script type="text/javascript" src="js/sdk/jq.min.js"></script>
         <script type="text/javascript" src="js/sdk/angular.min.js"></script>
         <script type="text/javascript" src="js/tonface.js"></script>
         <!-- /Frameworks -->
     </head>
-    <body ng-controller="AcoesFBCtrl" ng-init="SetUpFB()">
-    	<div id="fb-root"></div>
+    <body ng-controller="AcoesFBCtrl" ng-init="SetUp()">
+        <!-- inicialização FB -->
+        <div id="fb-root"></div>
 
     	<div id="acoes_fb">
 			<button ng-click="AssinarApp()">Logar FB</button>
     	</div>
+
+        <div id="resultado_fb" style="display: none;">
+            Loggou saporra!
+        </div>
     	
         
         <footer id="includes_js">
