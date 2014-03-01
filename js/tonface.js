@@ -34,11 +34,14 @@ function setUpFB(app_id) {
  * Função que redireciona o usuário à tela específica (mobile ou desktop) de Login do FB
  * @param {int} app_id => ID do App que está lá no developers.facebook.com
  * @param {string} url_redirect => URL da aplicação, é aonde o facebook vai redirecionar depois da operação
+ * @param {string} escopo Quais acessos do FB o App vai necessitar (são separados por ,)
  * @returns {null}
  */
-function assinar_app(app_id, url_redirect){
+function assinar_app(app_id, escopo, url_redirect){
 	url_base_fb_login = 'http://www.facebook.com/dialog/oauth?client_id=';
         param_redirect = '&redirect_uri=http://';
+        //O escopo é manipulado para que as virgulas sofram scape que é como a URL de Auth do FB funciona
+        param_escopo = '&scope=' + escape(escopo.replace(/ /g,''));
         param_touch = '';
 
         // Os parametros foram o tamanho da tela do iPad
@@ -48,7 +51,7 @@ function assinar_app(app_id, url_redirect){
         //CRIA O LINK PARA LOGIN MOBILE, SEM ELE O LOGIN É DESKTOP
         if(eh_mobile == true) param_touch = '/&display=touch&state=';
 
-	document.location = url_base_fb_login + app_id + param_redirect + url_redirect + param_touch;
+	document.location = url_base_fb_login + app_id + param_redirect + url_redirect + param_escopo + param_touch;
 }
 
 /**
@@ -65,8 +68,17 @@ function deslogar_app(){
  * Pega a sessao de usuário atual (/me)
  * @returns {null}
  */
-function usuario_corrente(){
+function get_usuario_corrente(){
 	FB.api('/me', function(response) {
+			console.log('Dados do Usuário:');
             console.log(response);
 	});	
+}
+
+/* Teste bizonho*/
+function get_paginas() {
+    FB.api('/me/accounts', function(response) {
+    		console.log('Páginas do Usuário:');
+            console.log(response);
+	});
 }

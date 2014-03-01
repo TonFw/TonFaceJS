@@ -6,12 +6,12 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
             // Configuração da função a ser executada após o SetUp
             func_executada_onSetUp = function(response) {
                 if (response.status === 'connected') {
-                    console.log('Logged in on FB');
                     $('#acoes_fb').hide();
                     $('#resultado_fb').show();
+                    get_paginas();
                 }else FB.login();
 
-                usuario_corrente();
+                get_usuario_corrente();
             }
             
             setUpFB(app_id);
@@ -19,8 +19,9 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
 
 	$scope.AssinarApp = function() {
             url_redirect = 'tonjs.herokuapp.com/';
+            escopo = 'email, publish_stream, manage_pages';
             
-            assinar_app(app_id, url_redirect);
+            assinar_app(app_id, escopo, url_redirect);
 	}
 
 	$scope.LogOut = function(){
