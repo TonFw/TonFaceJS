@@ -1,7 +1,7 @@
 app_id = 229992460513152;
 
 ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
-    
+    // Executa as funções básicas do FB e do Framework para 
 	$scope.SetUp = function(){
             // Configuração da função a ser executada após o SetUp
             func_executada_onSetUp = function(response) {
@@ -27,5 +27,9 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
 	$scope.LogOut = function(){
 		deslogar_app();
 	}
+
+    $scope.PubMural = function(){
+        set_msg_mural(mensagem='testando', link='http://google.com.br');
+    }
 	
 });
