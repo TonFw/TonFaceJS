@@ -31,5 +31,4 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
     $scope.PubFeed = function(){
         set_feed_msg(mensagem='testando', link='http://google.com.br');
     }
-	
 });

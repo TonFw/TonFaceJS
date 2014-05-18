@@ -1,3 +1,6 @@
+// IF !debug (false) there is no Console.log
+debug = true;
+
 /**
  * Esta variável deve ser preenchida com a função a ser executada depois que o setUp do FB seja concluído
  * Obs: if (response.status === 'connected') significa que a permissão foi dada pelo usuário corrente
@@ -63,7 +66,7 @@ function signup_app(app_id, escopo, url_redirect){
  */
 function signout_app(){
 	FB.logout(function(response) {
-		console.log(response);
+		if(debug)console.log(response);
 	});
 }
 
@@ -73,8 +76,8 @@ function signout_app(){
  */
 function get_current_user(){
 	FB.api('/me', function(response) {
-		console.log('Dados do Usuário:');
-        console.log(response);
+		if(debug)console.log('Dados do Usuário:');
+        if(debug)console.log(response);
         localStorage.setItem("usuario", JSON.stringify(response));
         usuario = response; //JSON.parse(localStorage.usuario);
 	});	
@@ -83,8 +86,8 @@ function get_current_user(){
 /* Pega as páginas do Usuário */
 function get_user_admin_pages() {
     FB.api('/me/accounts', function(response) {
-		console.log('Páginas do Usuário:');
-        console.log(response);
+		if(debug)console.log('Páginas do Usuário:');
+        if(debug)console.log(response);
         localStorage.setItem("paginas", JSON.stringify(response));
         paginas = response; //JSON.parse(localStorage.paginas);
 	});
@@ -99,7 +102,7 @@ function get_user_admin_pages() {
 function set_feed_msg(mensagem, link) {
 	// Everyone é para forçar que vá para o mural como sendo público (sem privacidade do usuário)
 	FB.api('/me/feed', 'post', { message: mensagem, link: link, privacy: { value: 'EVERYONE' } }, function(response) {
-		if (!response || response.error) { console.log(response); return; }
+		if (!response || response.error) { if(debug)console.log(response); return; }
 		
 		localStorage.setItem("postagem", JSON.stringify(response));
 		postagem = response;
@@ -120,4 +123,24 @@ function set_feed_msg(mensagem, link) {
 		);
 
 	});
+}
+
+/**
+* Execute the FQL passed
+**/
+fql_resps = []; // Uma consulta FQL sempre retorna uma Array
+function exec_fql(fql) {
+	FB.api(
+		{
+			method: 'fql.query',
+			query: fql
+		},
+		function(response) {
+			fql_resp = response;
+			if(debug)console.log(response);
+
+			// "Var_dump" FQL
+			for(count in fql_resp) if(debug)console.log(fql_resp[count]);
+		}
+	);
 }
