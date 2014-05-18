@@ -21,11 +21,11 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
             url_redirect = 'tonjs.herokuapp.com/';
             escopo = 'email, publish_stream, manage_pages';
             
-            assinar_app(app_id, escopo, url_redirect);
+            signup_app(app_id, escopo, url_redirect);
 	}
 
 	$scope.LogOut = function(){
-		deslogar_app();
+		signout_app();
 	}
 
     $scope.PubMural = function(){

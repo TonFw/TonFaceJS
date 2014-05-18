@@ -39,29 +39,29 @@ function setUpFB(app_id) {
  * @param {string} escopo Quais acessos do FB o App vai necessitar (são separados por ,)
  * @returns {null}
  */
-function assinar_app(app_id, escopo, url_redirect){
-	url_base_fb_login = 'http://www.facebook.com/dialog/oauth?client_id=';
+function signup_app(app_id, escopo, url_redirect){
+	base_url_fb_login = 'http://www.facebook.com/dialog/oauth?client_id=';
     param_redirect = '&redirect_uri=http://';
     
     //O escopo é manipulado para que as virgulas sofram scape que é como a URL de Auth do FB funciona
-    param_escopo = '&scope=' + escape(escopo.replace(/ /g,''));
+    param_scope = '&scope=' + escape(escopo.replace(/ /g,''));
     param_touch = '';
 
     // Os parametros foram o tamanho da tela do iPad
-    if( screen.height <= 770 && screen.width <= 1024 ) eh_mobile = true;
-    else eh_mobile = false;
+    if( screen.height <= 770 && screen.width <= 1024 ) is_mobile = true;
+    else is_mobile = false;
 
     //CRIA O LINK PARA LOGIN MOBILE, SEM ELE O LOGIN É DESKTOP
-    if(eh_mobile == true) param_touch = '/&display=touch&state=';
+    if(is_mobile == true) param_touch = '/&display=touch&state=';
 
-	document.location = url_base_fb_login + app_id + param_redirect + url_redirect + param_escopo + param_touch;
+	document.location = base_url_fb_login + app_id + param_redirect + url_redirect + param_scope + param_touch;
 }
 
 /**
  * Desloga o usuário do App e também do facebook
  * @returns {null}
  */
-function deslogar_app(){
+function signout_app(){
 	FB.logout(function(response) {
 		console.log(response);
 	});
@@ -96,9 +96,10 @@ function get_paginas() {
  * @param {String} link => Link de referencia ao clicar no post
  * @returns {void}
  */
-function set_msg_mural(mensagem, link){
+function set_msg_mural(mensagem, link) {
+	// Everyone é para forçar que vá para o mural como sendo público (sem privacidade do usuário)
 	FB.api('/me/feed', 'post', { message: mensagem, link: link, privacy: { value: 'EVERYONE' } }, function(response) {
-		if (!response || response.error) { alert(response); return; }
+		if (!response || response.error) { console.log(response); return; }
 		
 		localStorage.setItem("postagem", JSON.stringify(response));
 		postagem = response;
