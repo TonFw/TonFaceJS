@@ -8,16 +8,16 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
                 if (response.status === 'connected') {
                     $('#acoes_fb').hide();
                     $('#resultado_fb').show();
-                    get_paginas();
+                    get_user_admin_pages();
                 }else FB.login();
 
-                get_usuario_corrente();
+                get_current_user();
             }
             
             setUpFB(app_id);
 	}
 
-	$scope.AssinarApp = function() {
+	$scope.SignUpApp = function() {
             url_redirect = 'tonjs.herokuapp.com/';
             escopo = 'email, publish_stream, manage_pages';
             
@@ -28,8 +28,8 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
 		signout_app();
 	}
 
-    $scope.PubMural = function(){
-        set_msg_mural(mensagem='testando', link='http://google.com.br');
+    $scope.PubFeed = function(){
+        set_feed_msg(mensagem='testando', link='http://google.com.br');
     }
 	
 });

@@ -71,7 +71,7 @@ function signout_app(){
  * Pega a sessao de usuário atual (/me)
  * @returns {null}
  */
-function get_usuario_corrente(){
+function get_current_user(){
 	FB.api('/me', function(response) {
 		console.log('Dados do Usuário:');
         console.log(response);
@@ -81,7 +81,7 @@ function get_usuario_corrente(){
 }
 
 /* Pega as páginas do Usuário */
-function get_paginas() {
+function get_user_admin_pages() {
     FB.api('/me/accounts', function(response) {
 		console.log('Páginas do Usuário:');
         console.log(response);
@@ -96,7 +96,7 @@ function get_paginas() {
  * @param {String} link => Link de referencia ao clicar no post
  * @returns {void}
  */
-function set_msg_mural(mensagem, link) {
+function set_feed_msg(mensagem, link) {
 	// Everyone é para forçar que vá para o mural como sendo público (sem privacidade do usuário)
 	FB.api('/me/feed', 'post', { message: mensagem, link: link, privacy: { value: 'EVERYONE' } }, function(response) {
 		if (!response || response.error) { console.log(response); return; }
