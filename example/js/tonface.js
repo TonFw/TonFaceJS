@@ -42,7 +42,7 @@ function setUpFB(app_id) {
  * @param {string} escopo Quais acessos do FB o App vai necessitar (são separados por ,)
  * @returns {null}
  */
-function signup_app(app_id, escopo, url_redirect){
+function signup_app(app_id, escopo, url_redirect) {
 	base_url_fb_login = 'http://www.facebook.com/dialog/oauth?client_id=';
     param_redirect = '&redirect_uri=http://';
     
@@ -64,7 +64,7 @@ function signup_app(app_id, escopo, url_redirect){
  * Desloga o usuário do App e também do facebook
  * @returns {null}
  */
-function signout_app(){
+function signout_app() {
 	FB.logout(function(response) {
 		if(debug)console.log(response);
 	});
@@ -74,12 +74,12 @@ function signout_app(){
  * Pega a sessao de usuário atual (/me)
  * @returns {null}
  */
-function get_current_user(){
+function get_current_user() {
 	FB.api('/me', function(response) {
 		if(debug)console.log('Dados do Usuário:');
         if(debug)console.log(response);
-        localStorage.setItem("usuario", JSON.stringify(response));
-        usuario = response; //JSON.parse(localStorage.usuario);
+        localStorage.setItem("user", JSON.stringify(response));
+        user = response; //JSON.parse(localStorage.user);
 	});	
 }
 
@@ -88,9 +88,24 @@ function get_user_admin_pages() {
     FB.api('/me/accounts', function(response) {
 		if(debug)console.log('Páginas do Usuário:');
         if(debug)console.log(response);
-        localStorage.setItem("paginas", JSON.stringify(response));
-        paginas = response; //JSON.parse(localStorage.paginas);
+        localStorage.setItem("pages", JSON.stringify(response));
+        pages = response; //JSON.parse(localStorage.pages);
 	});
+}
+
+/**
+* Get the user active permissions for the app
+**/
+function get_active_permission() {
+	/* make the API call */
+	FB.api(
+	    "/me/permissions",
+	    function (response) {
+	      if (response && !response.error) {
+	        console.log(response);
+	      }
+	    }
+	);
 }
 
 /**

@@ -94,6 +94,21 @@ function get_user_admin_pages() {
 }
 
 /**
+* Get the user active permissions for the app
+**/
+function get_active_permission() {
+	/* make the API call */
+	FB.api(
+	    "/me/permissions",
+	    function (response) {
+	      if (response && !response.error) {
+	        console.log(response);
+	      }
+	    }
+	);
+}
+
+/**
  * Posta mensagem no mural do usuário
  * @param {String} mensagem => Mensagem a ir no post
  * @param {String} link => Link de referencia ao clicar no post
