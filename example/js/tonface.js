@@ -32,6 +32,7 @@ function setUpFB(app_id) {
 	    js = d.createElement('script'); js.id = id; js.async = true;
 	    js.src = "//connect.facebook.net/es_LA/all.js";
 	    d.getElementsByTagName('head')[0].appendChild(js);
+	    localStorage.clear();
 	}(document));
 }
 
