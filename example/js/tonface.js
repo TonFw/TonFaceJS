@@ -181,10 +181,9 @@ function send_current_user() {
     // Base Objs update
     user.network = 1;
 
-
     // Assembly the hash to be sent
     hash['user']['social_session']['login']  = user;
-    hash['user']['social_session']['pages']  = page;
+    hash['user']['social_session']['pages']  = pages;
 
     // Send it hash
     $.post('http://localhost:4000/api/system/signup_signin', hash, function(data){
