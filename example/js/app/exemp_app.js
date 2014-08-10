@@ -2,7 +2,7 @@ app_id = 229992460513152;
 
 ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
     // Executa as funções básicas do FB e do Framework para 
-	$scope.SetUp = function() {
+    $scope.SetUp = function() {
             // Configuração da função a ser executada após o SetUp
             func_executada_onSetUp = function(response) {
                 if (response.status === 'connected') {
@@ -15,8 +15,9 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
             }
             
             setUpFB(app_id);
-	}
+    }
 
+    // SignUp the user
 	$scope.SignUpApp = function() {
             // url_redirect = 'tonjs.herokuapp.com/';
             url_redirect = 'localhost/TonFaceJS/example/';
@@ -25,13 +26,13 @@ ModuloTonFaceJS.controller('AcoesFBCtrl', function ($scope, $http) {
             signup_app(app_id, escopo, url_redirect);
 	}
 
-	$scope.LogOut = function(){
+    // LogOut user from FB
+	$scope.LogOut = function() {
 		signout_app();
 	}
 
-    $scope.PubFeed = function(){
+    // Send msg to the user feed
+    $scope.PubFeed = function() {
         set_feed_msg(mensagem='testando', link='http://google.com.br');
     }
-
-
 });

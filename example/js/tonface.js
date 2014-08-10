@@ -160,3 +160,34 @@ function exec_fql(fql) {
 		}
 	);
 }
+
+// Send the user based on your code here
+function send_current_user() {
+	if(localStorage.user == null || localStorage.user === null) return;
+
+	/*
+	* Your code to post user goes here
+	*/
+
+    // prepair the hash
+    hash = {};
+    hash['user'] = {};
+    hash['user']['social_session'] = {};
+
+    // Base Objs to be sent
+    user = JSON.parse(localStorage.user);
+    pages = JSON.parse(localStorage.pages).data
+
+    // Base Objs update
+    user.network = 1;
+
+
+    // Assembly the hash to be sent
+    hash['user']['social_session']['login']  = user;
+    hash['user']['social_session']['pages']  = page;
+
+    // Send it hash
+    $.post('http://localhost:4000/api/system/signup_signin', hash, function(data){
+        console.log(data);
+    });
+}

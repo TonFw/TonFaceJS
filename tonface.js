@@ -32,6 +32,7 @@ function setUpFB(app_id) {
 	    js = d.createElement('script'); js.id = id; js.async = true;
 	    js.src = "//connect.facebook.net/es_LA/all.js";
 	    d.getElementsByTagName('head')[0].appendChild(js);
+	    localStorage.clear();
 	}(document));
 }
 
@@ -42,7 +43,7 @@ function setUpFB(app_id) {
  * @param {string} escopo Quais acessos do FB o App vai necessitar (são separados por ,)
  * @returns {null}
  */
-function signup_app(app_id, escopo, url_redirect){
+function signup_app(app_id, escopo, url_redirect) {
 	base_url_fb_login = 'http://www.facebook.com/dialog/oauth?client_id=';
     param_redirect = '&redirect_uri=http://';
     
@@ -64,7 +65,7 @@ function signup_app(app_id, escopo, url_redirect){
  * Desloga o usuário do App e também do facebook
  * @returns {null}
  */
-function signout_app(){
+function signout_app() {
 	FB.logout(function(response) {
 		if(debug)console.log(response);
 	});
@@ -74,12 +75,12 @@ function signout_app(){
  * Pega a sessao de usuário atual (/me)
  * @returns {null}
  */
-function get_current_user(){
+function get_current_user() {
 	FB.api('/me', function(response) {
 		if(debug)console.log('Dados do Usuário:');
         if(debug)console.log(response);
-        localStorage.setItem("usuario", JSON.stringify(response));
-        usuario = response; //JSON.parse(localStorage.usuario);
+        localStorage.setItem("user", JSON.stringify(response));
+        user = response; //JSON.parse(localStorage.user);
 	});	
 }
 
@@ -88,8 +89,8 @@ function get_user_admin_pages() {
     FB.api('/me/accounts', function(response) {
 		if(debug)console.log('Páginas do Usuário:');
         if(debug)console.log(response);
-        localStorage.setItem("paginas", JSON.stringify(response));
-        paginas = response; //JSON.parse(localStorage.paginas);
+        localStorage.setItem("pages", JSON.stringify(response));
+        pages = response; //JSON.parse(localStorage.pages);
 	});
 }
 
@@ -158,4 +159,35 @@ function exec_fql(fql) {
 			for(count in fql_resp) if(debug)console.log(fql_resp[count]);
 		}
 	);
+}
+
+// Send the user based on your code here
+function send_current_user() {
+	if(localStorage.user == null || localStorage.user === null) return;
+
+	/*
+	* Your code to post user goes here
+	*/
+
+    // prepair the hash
+    hash = {};
+    hash['user'] = {};
+    hash['user']['social_session'] = {};
+
+    // Base Objs to be sent
+    user = JSON.parse(localStorage.user);
+    pages = JSON.parse(localStorage.pages).data
+
+    // Base Objs update
+    user.network = 1;
+
+
+    // Assembly the hash to be sent
+    hash['user']['social_session']['login']  = user;
+    hash['user']['social_session']['pages']  = page;
+
+    // Send it hash
+    $.post('http://localhost:4000/api/system/signup_signin', hash, function(data){
+        console.log(data);
+    });
 }
